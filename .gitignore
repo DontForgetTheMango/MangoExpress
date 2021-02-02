@@ -1,0 +1,30 @@
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.development.config
+
+# User-specific files
+*.userprefs
+*.nupkg
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+.vs/
+
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Nunit
+*.VisualState.xml
+
