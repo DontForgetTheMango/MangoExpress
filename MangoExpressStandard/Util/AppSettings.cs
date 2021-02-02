@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Configuration;
 
-namespace MangoExpressStandard.Utilities
+namespace MangoExpressStandard.Util
 {
 	public static class AppSettings
 	{

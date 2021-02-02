@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MangoExpressStandard.Utilities
+namespace MangoExpressStandard.Util
 {
     public class DeserializetestDetails
     {

@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace MangoExpressStandard.Utilities
+namespace MangoExpressStandard.Util
 {
     /// <summary>
     /// Capture Test Results executes and allows for pass/warn/fail of nunit tests
