@@ -35,5 +35,29 @@ namespace MangoExpressStandard.Util
 		public static bool Release { get; } = true;
 
 		public static string TestResultDirectory { get; } = GetRequiredAppString("TestResultDirectory");
+
+		public static string DownloadsRootDirectory { get; } = GetRequiredAppString("DownloadsRootDirectory");
+
+		public static WebDriverFactory.BrowserOptions Browser
+        {
+			get
+            {
+				var browser = GetRequiredAppString("browser");
+
+                switch (browser.ToLower())
+                {
+					case "chrome":
+						return WebDriverFactory.BrowserOptions.Chrome;
+					case "ie":
+						return WebDriverFactory.BrowserOptions.IE;
+					case "firefox":
+						return WebDriverFactory.BrowserOptions.FireFox;
+					default:
+						return default(WebDriverFactory.BrowserOptions);
+				}
+            }
+        }
+
+		public static bool HeadlessMode { get; } = Get<bool>("HeadlessMode");
 	}
 }
