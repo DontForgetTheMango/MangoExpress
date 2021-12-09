@@ -3,16 +3,16 @@ using System.Configuration;
 
 namespace MangoExpressStandard.Util
 {
-	public static class AppSettings
+	public class AppSettings
 	{
 		private static T Get<T>(string key)
 		{
-			var appSetting = ConfigurationManager.AppSettings[key];
+            string appSetting = ConfigurationManager.AppSettings[key];
 
-			if (string.IsNullOrWhiteSpace(appSetting)) return default;
+			if (string.IsNullOrWhiteSpace(appSetting)) return default(T);
 
-			var convert = TypeDescriptor.GetConverter(typeof(T));
-			return (T)(convert.ConvertFromInvariantString(appSetting));
+			var converter = TypeDescriptor.GetConverter(typeof(T));
+			return (T)(converter.ConvertFromInvariantString(appSetting));
 		}
 
 		private static string GetRequiredAppString(string appSetting)
@@ -32,12 +32,28 @@ namespace MangoExpressStandard.Util
 		/// </summary>
 		public static string BuildVersion { get; } = GetRequiredAppString("BuildVersion");
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="T:MangoExpressStandard.Util.AppSettings"/> is release.
+        /// </summary>
+        /// <value><c>true</c> if release; otherwise, <c>false</c>.</value>
 		public static bool Release { get; } = true;
 
+        /// <summary>
+        /// Gets the test result directory.
+        /// </summary>
+        /// <value>The test result directory.</value>
 		public static string TestResultDirectory { get; } = GetRequiredAppString("TestResultDirectory");
 
+        /// <summary>
+        /// Gets the downloads root directory.
+        /// </summary>
+        /// <value>The downloads root directory.</value>
 		public static string DownloadsRootDirectory { get; } = GetRequiredAppString("DownloadsRootDirectory");
 
+        /// <summary>
+        /// Gets the browser.
+        /// </summary>
+        /// <value>The browser.</value>
 		public static WebDriverFactory.BrowserOptions Browser
         {
 			get

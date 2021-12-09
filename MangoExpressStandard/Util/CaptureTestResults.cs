@@ -1,12 +1,17 @@
 ﻿using MangoExpressStandard.DTO;
+using MangoExpressStandard.Logger;
 using Newtonsoft.Json;
+using NLog;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace MangoExpressStandard.Util
 {
@@ -19,6 +24,7 @@ namespace MangoExpressStandard.Util
         private readonly ITestDetails _testDetails;
         private readonly Action _action;
         private readonly string _dateString;
+        private readonly string _testName;
         private readonly string _caller;
 
         /// <summary>
@@ -38,7 +44,36 @@ namespace MangoExpressStandard.Util
             _testDetails = testDetails;
             _action = action;
             _dateString = DateTime.Now.ToString("s").Replace(":", "-");
+            _testName = GetTestNameFromAction(action);
             _caller = caller;
+        }
+
+        private string GetTestNameFromAction(Action action)
+        {
+            // get test name
+            System.Reflection.MethodInfo className = action.Method;
+            var testName = className.DeclaringType.FullName;
+
+            // remove everything after "+" sign
+            int i = testName.IndexOf("+", StringComparison.Ordinal);
+            if (i > 0)
+                testName = testName.Substring(0, i);
+            testName = testName.Split('.').Last();
+
+            // get method name
+            string methodName = action.Method.Name;
+            var pattern = @"\<(.*?)\>";
+            var matches = Regex.Matches(methodName, pattern);
+
+            // clean up method name
+            foreach (Match m in matches)
+            {
+                methodName = m.Groups[1].ToString();
+            }
+
+            // append method name to test name
+            testName += $".{methodName}";
+            return testName;
         }
 
         /// <summary>
@@ -84,6 +119,62 @@ namespace MangoExpressStandard.Util
                             break;
                     }
                 }
+                finally
+                {
+                    CaptureDataForHTMLResults();
+                }
+            }
+        }
+
+        [ThreadStatic]
+        public static string TestResultDirectory;
+
+        private void SetTestResultDirectory()
+        {
+            if (string.IsNullOrEmpty(TestResultDirectory))
+                TestResultDirectory = $@"{AppSettings.TestResultDirectory}\{_testName}_{_dateString}";
+        }
+
+        private void CaptureDataForHTMLResults()
+        {
+            // create HTML directory
+            var imageDirectory = $@"{AppSettings.TestResultDirectory}\HTML\images";
+            if (!Directory.Exists(imageDirectory))
+            {
+                Directory.CreateDirectory(imageDirectory);
+            }
+
+            Screenshot ss = ((ITakesScreenshot)_driver).GetScreenshot();
+            ss.SaveAsFile($@"{imageDirectory}\{TestContext.CurrentContext.Test.ID}.png", ScreenshotImageFormat.Png);
+        }
+
+        private void CaptureAllData(string ex, string subfolderName, NLog.LogLevel logLevel)
+        {
+            var logger = LogManager.GetCurrentClassLogger();
+
+            // create subfolder
+            var thisSubfolderName = $@"{TestResultDirectory}\{subfolderName}";
+            Directory.CreateDirectory(thisSubfolderName);
+
+            Screenshot ss = ((ITakesScreenshot)_driver).GetScreenshot();
+            string imageLocation = $@"{thisSubfolderName}\final_image.png";
+            logger.Log(logLevel, $"image: {imageLocation}");
+            ss.SaveAsFile(imageLocation, ScreenshotImageFormat.Png);
+
+            // save exception 
+            if (!string.IsNullOrEmpty(ex))
+            {
+                string jsonLocation = $@"{thisSubfolderName}\exception.txt";
+                logger.Log(logLevel, $@"json: {jsonLocation}");
+                File.WriteAllText(jsonLocation, ex);
+            }
+
+            // save scenario
+            if (_testDetails != null)
+            {
+                string scenarioLocation = $@"{thisSubfolderName}\testDetails.json";
+                logger.Log(logLevel, $"json: {scenarioLocation}");
+                File.WriteAllText(scenarioLocation, JsonConvert.SerializeObject(_testDetails));
             }
         }
 
@@ -123,15 +214,86 @@ namespace MangoExpressStandard.Util
         }
 
         private void SafelyCatchNunitExceptions(
-            TestDelegate testDelegate,
+            TestDelegate code,
             ITestDetails testDetails,
             string testName)
         {
+            var logger = MangoLogger.GetLogger();
             Exception caughtException;
 
             using (new TestExecutionContext.IsolatedContext())
             {
+                var throwException = false;
+                try
+                {
+                    code();
+                }
+                catch (Exception ex)
+                {
+                    logger.Debug($"ex.Message: {ex.Message}");
+                    var caughtException = ex;
+
+                    var messages = new List<string>();
+                    if (caughtException.Message.StartsWith("Multiple failures or warnings in test:"))
+                    {
+                        var last = false;
+                        for (int i = 1; i < 100; i++)
+                        {
+                            var message = caughtException.Message.Substring(caughtException.Message.IndexOf($"{i}") + 2);
+
+                            if (message.Contains($"{i + 1})"))
+                                message = message.Substring(0, message.IndexOf($"{i + 1}"));
+                            else
+                                last = true;
+                        }
+                    }
+                    else
+                    {
+                        messages.AddRange(GetAllExceptionMessages(caughtException));
+                    }
+
+                    foreach (var message in messages)
+                    {
+                        logger.Debug($"caughtException.Message: {message}");
+
+                        var knownIssueList = new List<string>();
+                        foreach (var knownIssue in knownIssueList)
+                        {
+                            if (string.IsNullOrEmpty(knownIssue))
+                                continue;
+
+                            Regex rgx = new Regex(knownIssue);
+                            var isKnownIssue = rgx.IsMatch(message);
+                            if (isKnownIssue)
+                                knownIssueList.Add(knownIssue);
+                        }
+
+                        logger.Debug($"knownIssueList: {string.Join(",", knownIssueList)}");
+
+                        if (knownIssueList.Count > 0)
+                        {
+                            foreach (var knownIssue in knownIssueList)
+                            {
+                                if (knownIssue.)
+                            }
+                        }
+                    }
+                }
             }
+        }
+        private List<string> GetAllExceptionMessages(Exception ex)
+        {
+            var retMessage = new List<string>();
+            retMessage.Add(ex.Message);
+
+            var exception = ex;
+            while (exception.InnerException != null)
+            {
+                retMessage.Add(exception.InnerException.Message);
+                exception = exception.InnerException;
+            }
+
+            return retMessage;
         }
     }
 }

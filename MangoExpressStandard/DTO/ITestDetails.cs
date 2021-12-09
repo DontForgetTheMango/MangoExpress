@@ -1,4 +1,5 @@
-﻿using static MangoExpressStandard.DTO.TestDetails;
+﻿using System.Collections.Generic;
+using static MangoExpressStandard.DTO.TestDetails;
 
 namespace MangoExpressStandard.DTO
 {
@@ -26,5 +27,11 @@ namespace MangoExpressStandard.DTO
         /// Description of test
         /// </summary>
         string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the expected error messages.
+        /// </summary>
+        /// <value>The expected error messages.</value>
+        List<ExpectedError> ExpectedErrors { get; set; }
     }
 }

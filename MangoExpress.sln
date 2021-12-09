@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoExpress", "MangoExpress\MangoExpress.csproj", "{B20BEC2B-AB86-4E1A-A404-13F1893981AD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoExpressStandard", "MangoExpressStandard\MangoExpressStandard.csproj", "{C8B7B463-1D30-40B6-BACB-CC616E2A6977}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B20BEC2B-AB86-4E1A-A404-13F1893981AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B20BEC2B-AB86-4E1A-A404-13F1893981AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B20BEC2B-AB86-4E1A-A404-13F1893981AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B20BEC2B-AB86-4E1A-A404-13F1893981AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Release|Any CPU.ActiveCfg = Release|Any CPU
