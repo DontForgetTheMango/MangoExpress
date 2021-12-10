@@ -3,7 +3,7 @@ using OpenQA.Selenium.Internal;
 
 namespace MangoExpressStandard.Encapsulation
 {
-    interface ISafeWebElement : IWebElement, ILocatable, IWrapsElement
+    public interface ISafeWebElement : IWebElement, ILocatable, IWrapsElement
     {
         int MaxRetries { get; set; }
 
