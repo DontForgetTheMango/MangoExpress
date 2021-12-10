@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace MangoExpressStandard.DTO
 {
@@ -41,5 +42,8 @@ namespace MangoExpressStandard.DTO
         /// <inheritdoc/>
         [JsonProperty(Required = Required.Default)]
         public string Description { get; set; }
+
+        [JsonProperty(Required = Required.Default)]
+        public List<ExpectedError> ExpectedErrors { get; set; }
     }
 }

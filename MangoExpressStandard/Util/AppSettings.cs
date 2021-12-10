@@ -39,6 +39,12 @@ namespace MangoExpressStandard.Util
 		public static bool Release { get; } = true;
 
         /// <summary>
+        /// Gets a value indicating whether this <see cref="T:MangoExpressStandard.Util.AppSettings"/> test details
+        /// execute only.
+        /// </summary>
+        /// <value><c>true</c> if test details execute only; otherwise, <c>false</c>.</value>
+        public static bool TestDetailsExecuteOnly => Get<bool>("TestDetailsExecuteOnly");
+        /// <summary>
         /// Gets the test result directory.
         /// </summary>
         /// <value>The test result directory.</value>

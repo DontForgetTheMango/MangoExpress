@@ -17,7 +17,7 @@ namespace MangoExpressStandard.DTO
         /// Will test be executed?
         /// </summary>
         bool Execute { get; set; }
-        
+
         /// <summary>
         /// If test fails, will it fail, warn, or be ignored
         /// </summary>

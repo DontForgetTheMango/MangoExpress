@@ -219,7 +219,6 @@ namespace MangoExpressStandard.Util
             string testName)
         {
             var logger = MangoLogger.GetLogger();
-            Exception caughtException;
 
             using (new TestExecutionContext.IsolatedContext())
             {
@@ -256,13 +255,13 @@ namespace MangoExpressStandard.Util
                     {
                         logger.Debug($"caughtException.Message: {message}");
 
-                        var knownIssueList = new List<string>();
+                        var knownIssueList = new List<ExpectedError>();
                         foreach (var knownIssue in knownIssueList)
                         {
-                            if (string.IsNullOrEmpty(knownIssue))
+                            if (string.IsNullOrEmpty(knownIssue.Message))
                                 continue;
 
-                            Regex rgx = new Regex(knownIssue);
+                            Regex rgx = new Regex(knownIssue.Message);
                             var isKnownIssue = rgx.IsMatch(message);
                             if (isKnownIssue)
                                 knownIssueList.Add(knownIssue);
@@ -274,17 +273,36 @@ namespace MangoExpressStandard.Util
                         {
                             foreach (var knownIssue in knownIssueList)
                             {
-                                if (knownIssue.)
+                                if (!knownIssue.IsResolved)
+                                {
+                                    // Write exception to file for archiving
+                                }
+                                else
+                                {
+                                    throwException = true;
+                                }
                             }
                         }
+                        else
+                        {
+                            throwException = true;
+                            break;
+                        }
                     }
+
+                    // throw the exception
+                    if (throwException)
+                        throw;
                 }
             }
         }
+
         private List<string> GetAllExceptionMessages(Exception ex)
         {
-            var retMessage = new List<string>();
-            retMessage.Add(ex.Message);
+            var retMessage = new List<string>
+            {
+                ex.Message
+            };
 
             var exception = ex;
             while (exception.InnerException != null)
