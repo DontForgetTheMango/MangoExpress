@@ -15,13 +15,37 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="AForge" Version="2.2.5" />
+    <PackageReference Include="AForge.Imaging" Version="2.2.5" />
+    <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Logger\" />
+    <Folder Include="BaseTest\" />
+    <Folder Include="Attribute\" />
+    <Folder Include="POM\" />
+    <Folder Include="Extension\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Util\SafeWebElement.cs" />
     <Compile Remove="Util\ISafeWebElement.cs" />
+    <Compile Remove="Util\RandomStringGenerator.cs" />
+    <Compile Remove="Util\XpathThreader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TestFixtureStatus.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestStatus.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="test.default.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

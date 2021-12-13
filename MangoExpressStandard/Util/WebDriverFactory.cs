@@ -13,20 +13,11 @@ namespace MangoExpressStandard.Util
             IWebDriver _driver;
             Regex reg = new Regex("[0-9]{1,4}[xX][0-9]{1,4}");
 
-            var screensize = ConfigurationManager.AppSettings["screensize"];
-            if (!string.IsNullOrEmpty(screensize))
+            var browsersize = AppSettings.BrowserSize;
+            if (!browsersize.IsFullScreen)
             {
-                var match = reg.Match(screensize);
-                if (match.Success)
-                {
-                    var xAndY = match.Value.ToLower().Split('x');
-                    int x = int.Parse(xAndY[0]);
-                    int y = int.Parse(xAndY[1]);
-                    _driver = OpenDesiredWebDriver();
-                    _driver.Manage().Window.Size = new System.Drawing.Size(x, y);
-                }
-                else
-                    throw new ConfigurationErrorsException("screensize should be formatted intXint");
+                _driver = OpenDesiredWebDriver();
+                _driver.Manage().Window.Size = new System.Drawing.Size(browsersize.W, browsersize.H);
             }
             else
             {
@@ -40,38 +31,29 @@ namespace MangoExpressStandard.Util
             return _driver;
         }
 
-        public enum BrowserOptions
-        {
-            Chrome, 
-            IE,
-            FireFox
-        }
-
         private static IWebDriver OpenDesiredWebDriver()
         {
             var downloadDirectory = AppSettings.DownloadsRootDirectory;
             switch (AppSettings.Browser)
             {
-                case BrowserOptions.Chrome:
-                    {
-                        var chromeOptions = new ChromeOptions();
-                        chromeOptions.AddArgument("--disable-features=VizDisplayCompositor");
-                        chromeOptions.AddUserProfilePreference("download.default_directory", downloadDirectory);
-                        chromeOptions.AddUserProfilePreference("download.prompt_for_download", false);
-                        chromeOptions.AddUserProfilePreference("disable-popup-blocking", "true");
-                        chromeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore;
+                case AppSettings.BrowserOptions.Chrome:
+                {
+                    var chromeOptions = new ChromeOptions();
+                    chromeOptions.AddArgument("--disable-features=VizDisplayCompositor");
+                    chromeOptions.AddUserProfilePreference("download.default_directory", downloadDirectory);
+                    chromeOptions.AddUserProfilePreference("download.prompt_for_download", false);
+                    chromeOptions.AddUserProfilePreference("disable-popup-blocking", "true");
+                    chromeOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Ignore;
 
-                        if (AppSettings.HeadlessMode)
-                            chromeOptions.AddArgument("headless");
+                    if (AppSettings.HeadlessMode)
+                        chromeOptions.AddArgument("headless");
 
-                        return new ChromeDriver(ChromeDriverService.CreateDefaultService(), chromeOptions);
-                    }
-                case BrowserOptions.IE:
+                    return new ChromeDriver(ChromeDriverService.CreateDefaultService(), chromeOptions);
+                }
+                case AppSettings.BrowserOptions.IE:
                     throw new NotImplementedException("No one is using IE! Stop it!");
-                case BrowserOptions.FireFox:
-                    {
-                        throw new NotImplementedException("FireFox has not be implemented yet. Sorry...");
-                    }
+                case AppSettings.BrowserOptions.FireFox:
+                    throw new NotImplementedException("FireFox has not be implemented yet. Sorry...");
                 default:
                     throw new ConfigurationErrorsException("No browser selected in app.config");
             }

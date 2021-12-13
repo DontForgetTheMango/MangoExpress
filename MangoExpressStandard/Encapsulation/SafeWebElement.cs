@@ -106,6 +106,21 @@ namespace MangoExpressStandard.Encapsulation
         {
             Safe(() => WrappedElement.Submit());
         }
+
+        public string GetDomAttribute(string attr)
+        {
+            return Safe(() => WrappedElement.GetDomAttribute(attr));
+        }
+
+        public string GetDomProperty(string prop)
+        {
+            return Safe(() => WrappedElement.GetDomProperty(prop));
+        }
+
+        public ISearchContext GetShadowRoot()
+        {
+            return Safe(() =>  WrappedElement.GetShadowRoot());
+        }
         #endregion
 
         private void RefreshElementReference()

@@ -109,7 +109,11 @@ namespace MangoExpressStandard.Util
             }
         }
 
-        public static bool TryFindElements(IWebDriver driver, string xpath, string exceptionMessage, out List<IWebElement> element)
+        public static bool TryFindElements(
+            IWebDriver driver, 
+            string xpath, 
+            string exceptionMessage, 
+            out List<IWebElement> element)
         {
             element = new List<IWebElement>();
 
