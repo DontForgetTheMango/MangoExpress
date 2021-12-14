@@ -1,6 +1,7 @@
 ﻿using System;
 using MangoExpressStandard.Encapsulation;
 using MangoExpressStandard.Extension;
+using MangoExpressStandard.Util;
 using OpenQA.Selenium;
 
 namespace MangoExpressStandard.POM
@@ -22,8 +23,12 @@ namespace MangoExpressStandard.POM
         /// </summary>
         public void ClickTestButton()
         {
-            TestLogger.AddStep("Click 'Test Button'");
-            TestButton.Click();
+            SafetyHarness.DefaultHandleException(typeof(ElementNotVisibleException));
+            SafetyHarness.Retry(() =>
+            {
+                TestLogger.AddStep("Click 'Test Button'");
+                TestButton.Click();
+            });
         }
     }
 }
