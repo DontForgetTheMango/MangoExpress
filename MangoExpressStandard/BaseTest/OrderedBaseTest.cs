@@ -12,6 +12,8 @@ namespace MangoExpressStandard.BaseTest
             base.OneTimeSetUp();
 
             Driver = WebDriverFactory.NewWebDriver();
+
+            AddEventHandlers(Driver);
         }
 
         [OneTimeTearDown]

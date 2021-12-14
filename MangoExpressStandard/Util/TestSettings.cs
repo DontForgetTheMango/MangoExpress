@@ -14,6 +14,20 @@ namespace MangoExpressStandard.Util
     /// </summary>
     public class TestSettings
     {
+        /// <summary>
+        /// Example for implementing testVersion in test.default.config
+        /// default value is -1 if "ExampleTestVersion not found in config
+        /// </summary>
+        /// <value>The example test version.</value>
+        public static int ExampleTestVersion { get; } = GetTestVersion("ExampleTestVersion");
+
+        /// <summary>
+        /// Example for implementing pageVersion in test.devault.config
+        /// default value is -1 if "ExamplePageVersion" not found in config
+        /// </summary>
+        /// <value>The example page version.</value>
+        public static int ExamplePageVersion { get; } = GetPageVersion("ExamplePageVersion");
+
         private static Dictionary<string, Dictionary<string, int>> _versions
             = new Dictionary<string, Dictionary<string, int>>();
 

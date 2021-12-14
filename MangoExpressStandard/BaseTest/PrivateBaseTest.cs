@@ -6,6 +6,7 @@ using MangoExpressStandard.Util;
 using NLog;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Events;
 
 namespace MangoExpressStandard.BaseTest
 {
@@ -66,6 +67,24 @@ namespace MangoExpressStandard.BaseTest
             {
                 TestLogger.AddStep($"Test Complete:{testName}");
             }
+        }
+
+        protected void AddEventHandlers(IWebDriver driver)
+        {
+            if (driver == null)
+                throw new ArgumentNullException("Cannot add events to null driver.");
+
+            var eventDriver = new EventFiringWebDriver(driver);
+            eventDriver.ElementClicking += SeleniumEventHandlers.OnElementClicking;
+            eventDriver.ElementClicked += SeleniumEventHandlers.OnElementClicked;
+            eventDriver.ElementValueChanging += SeleniumEventHandlers.OnElementValueChanging;
+            eventDriver.ElementValueChanged += SeleniumEventHandlers.OnElementValueChanged;
+            eventDriver.FindingElement += SeleniumEventHandlers.OnFindingElement;
+            eventDriver.FindElementCompleted += SeleniumEventHandlers.OnFindElementCompleted;
+            eventDriver.ExceptionThrown += SeleniumEventHandlers.OnExceptionThrown;
+            eventDriver.ScriptExecuting += SeleniumEventHandlers.OnScriptExecuting;
+            eventDriver.ScriptExecuted += SeleniumEventHandlers.OnScriptExecuted;
+            Driver = eventDriver;
         }
 
         protected void DocumentTestStatus()
@@ -136,6 +155,12 @@ namespace MangoExpressStandard.BaseTest
             }
 
             return testResultDirectory;
+        }
+
+        public static class TimeoutConst
+        {
+            public const int FiveMinutes = 10 * 60 * 1000;
+            public const int TenMinutes = 10 * 60 * 1000;
         }
     }
 }

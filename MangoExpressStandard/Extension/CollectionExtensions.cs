@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace MangoExpressStandard.Extension
 {
@@ -39,6 +40,39 @@ namespace MangoExpressStandard.Extension
             }
 
             return num;
+        }
+
+        public static IEnumerable<IList<T>> ChunksOf<T>(this IEnumerable<T> sequence, int size)
+        {
+            var chunk = new List<T>();
+
+            // yield list of elements of desired size
+            foreach (T element in sequence)
+            {
+                chunk.Add(element);
+                if (chunk.Count == size)
+                {
+                    yield return chunk;
+                    chunk = new List<T>(size);
+                }
+            }
+
+            // yield remainder of elements
+            if (chunk.Count > 0)
+            {
+                yield return chunk;
+            }
+        }
+
+        /// <summary>
+        /// Clone the specified cloneMe.
+        /// </summary>
+        /// <returns>The clone.</returns>
+        /// <param name="cloneMe">Clone me.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        public static IList<T> Clone<T>(this IList<T> cloneMe) where T : ICloneable
+        {
+            return cloneMe.Select(item => (T)item.Clone()).ToList();
         }
     }
 }

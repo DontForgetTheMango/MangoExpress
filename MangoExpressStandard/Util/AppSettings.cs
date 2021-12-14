@@ -8,20 +8,6 @@ namespace MangoExpressStandard.Util
 	public class AppSettings
 	{
         /// <summary>
-        /// Example for implementing testVersion in test.default.config
-        /// default value is -1 if "ExampleTestVersion not found in config
-        /// </summary>
-        /// <value>The example test version.</value>
-        public static int ExampleTestVersion { get; } = TestSettings.GetTestVersion("ExampleTestVersion");
-
-        /// <summary>
-        /// Example for implementing pageVersion in test.devault.config
-        /// default value is -1 if "ExamplePageVersion" not found in config
-        /// </summary>
-        /// <value>The example page version.</value>
-        public static int ExamplePageVersion { get; } = TestSettings.GetPageVersion("ExamplePageVersion");
-
-        /// <summary>
 		/// Get build version
 		/// </summary>
 		public static string BuildVersion { get; } = GetRequiredAppString("BuildVersion");

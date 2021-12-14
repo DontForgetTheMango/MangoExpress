@@ -48,6 +48,29 @@ namespace MangoExpressStandard.Util
             _caller = caller;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:MangoExpressStandard.Util.CaptureTestResults"/> class.
+        /// </summary>
+        /// <param name="driver">Driver.</param>
+        /// <param name="action">Action.</param>
+        /// <param name="caller">Caller.</param>
+        public CaptureTestResults(
+        IWebDriver driver,
+        Action action,
+        [CallerMemberName] string caller = "")
+        {
+            _driver = driver;
+            _testDetails = new TestDetails
+            {
+                Name = caller,
+                UponFailure = TestDetails.TestFailureEnum.Fail
+            };
+            _action = action;
+            _dateString = DateTime.Now.ToString("s").Replace(":", "-");
+            _testName = GetTestNameFromAction(action);
+            _caller = caller;
+        }
+
         private string GetTestNameFromAction(Action action)
         {
             // get test name
