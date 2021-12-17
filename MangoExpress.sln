@@ -1,9 +1,7 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoExpressStandard", "MangoExpressStandard\MangoExpressStandard.csproj", "{C8B7B463-1D30-40B6-BACB-CC616E2A6977}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoExpressStandard", "MangoExpressStandard\MangoExpressStandard.csproj", "{8E99ABAB-BDB5-4E05-836C-7A47333CFBCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +9,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8B7B463-1D30-40B6-BACB-CC616E2A6977}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9E6D758C-76A7-4EF6-BA4B-0425105464C6}
+		{8E99ABAB-BDB5-4E05-836C-7A47333CFBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E99ABAB-BDB5-4E05-836C-7A47333CFBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E99ABAB-BDB5-4E05-836C-7A47333CFBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E99ABAB-BDB5-4E05-836C-7A47333CFBCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

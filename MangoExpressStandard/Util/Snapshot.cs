@@ -26,9 +26,10 @@ namespace MangoExpressStandard.Util
 
             Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
 
-            using(var ms = new MemoryStream(ss.AsByteArray))
-            using (Bitmap bmp = new Bitmap(ms))
+            using (var ms = new MemoryStream(ss.AsByteArray))
+            using (var bmp = new Bitmap(ms))
             {
+                // Highlight the specific element
                 if (element != null)
                 {
                     Rectangle bmpRectangle = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -36,12 +37,12 @@ namespace MangoExpressStandard.Util
                     BitmapData imgData = bmp.LockBits(bmpRectangle, ImageLockMode.ReadWrite, bmp.PixelFormat);
 
                     int i = 1;
-                    foreach (int alpha in new List<int> {255, 127, 50, 20})
+                    foreach (int alpha in new List<int> { 255, 127, 50, 20 })
                     {
                         Color color = Color.FromArgb(alpha, rgb.Item1, rgb.Item2, rgb.Item3);
                         Rectangle drawRectangle = new Rectangle(
-                            element.Location.X - 1,
-                            element.Location.Y - 1,
+                            element.Location.X - i,
+                            element.Location.Y - i,
                             element.Size.Width + (i * 2),
                             element.Size.Height + (i * 2)
                         );
@@ -59,12 +60,16 @@ namespace MangoExpressStandard.Util
         {
             string imageLocation = $@"{path}\{name}.png";
             var logger = LogManager.GetCurrentClassLogger();
+
+            // for scrolling through page
             var js = driver as IJavaScriptExecutor;
             int innerH = int.Parse(js.ExecuteScript("return window.innerHeight").ToString());
             int currentY = 0;
             int lastY = 0;
             int scrollBy = innerH - 100;
             bool atBottom = false;
+
+            // Bitmaps disposed in finally statement
             var snapshotList = new List<Bitmap>();
             var locationList = new List<int>();
 
@@ -77,26 +82,27 @@ namespace MangoExpressStandard.Util
                 do
                 {
                     var ss = ((ITakesScreenshot)driver).GetScreenshot().AsByteArray;
-                    MemoryStream memoryStream = new MemoryStream(ss);
-
-                    Bitmap tempBitmap;
-
-                    if (isSingleSnapshot)
+                    using (MemoryStream memoryStream = new MemoryStream(ss))
                     {
-                        tempBitmap = new Bitmap(memoryStream);
-                        locationList.Add(currentY);
-                    }
-                    else
-                    {
-                        using (Bitmap bmp = new Bitmap(memoryStream))
+                        // disposed in finally statement
+                        Bitmap tempBitmap;
+
+                        if (isSingleSnapshot)
                         {
-                            tempBitmap = CropBitmap(bmp, 0, bmp.Size.Height - scrollBy - 20, bmp.Size.Width, scrollBy);
-                            locationList.Add(currentY + bmp.Size.Height - scrollBy - 20);
+                            tempBitmap = new Bitmap(memoryStream);
+                            locationList.Add(currentY);
                         }
-                    }
+                        else
+                        {
+                            using (Bitmap bmp = new Bitmap(memoryStream))
+                            {
+                                tempBitmap = CropBitmap(bmp, 0, bmp.Size.Height - scrollBy - 20, bmp.Size.Width, scrollBy);
+                                locationList.Add(currentY + bmp.Size.Height - scrollBy - 20);
+                            }
+                        }
 
-                    snapshotList.Add(tempBitmap);
-                    memoryStream.Dispose();
+                        snapshotList.Add(tempBitmap);
+                    }
 
                     js.ExecuteScript($"window.scrollBy(0, {scrollBy});");
                     currentY = int.Parse(js.ExecuteScript("return window.scrollY").ToString());
@@ -142,6 +148,7 @@ namespace MangoExpressStandard.Util
             }
             finally
             {
+                // dispose of bitmaps
                 snapshotList.ForEach(item => item.Dispose());
             }
 
