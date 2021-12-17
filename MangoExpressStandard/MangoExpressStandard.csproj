@@ -36,7 +36,6 @@
     <Compile Remove="Util\ISafeWebElement.cs" />
     <Compile Remove="Util\RandomStringGenerator.cs" />
     <Compile Remove="Util\XpathThreader.cs" />
-    <Compile Remove="Util\Snapshot.cs" />
     <Compile Remove="BaseTest\ExampleTests\TestFixtureAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
