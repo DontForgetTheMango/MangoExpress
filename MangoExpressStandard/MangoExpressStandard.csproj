@@ -19,6 +19,8 @@
     <None Remove="System.Drawing.Common" />
     <None Remove="System.Configuration.ConfigurationManager" />
     <None Remove="DotNetSeleniumExtras.WaitHelpers" />
+    <None Remove="Castle.Core" />
+    <None Remove="Castle.Windsor" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.13" />
@@ -31,5 +33,7 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+    <PackageReference Include="Castle.Core" Version="4.4.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
   </ItemGroup>
 </Project>

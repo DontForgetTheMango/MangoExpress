@@ -15,7 +15,9 @@ namespace MangoExpressStandard.Factory
             switch(TestSettings.ExamplePageVersion)
             {
                 case 1:
-                    return new TestPageA(driver);
+                    var iPageA = DependencyResolver.For<ITestPageA>(typeof(TestPageA));
+                    iPageA.Initialize(driver);
+                    return iPageA;
                 default:
                     throw new NotImplementedException($"TestPageA version {TestSettings.ExamplePageVersion} not implemented!");
             }
