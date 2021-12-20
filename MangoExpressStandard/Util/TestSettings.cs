@@ -19,22 +19,33 @@ namespace MangoExpressStandard.Util
         /// default value is -1 if "ExampleTestVersion not found in config
         /// </summary>
         /// <value>The example test version.</value>
-        public static int ExampleTestVersion { get; } = GetTestVersion("ExampleTestVersion");
+        public static int ExampleTestVersion { get; } = GetTestVersion("ExampleTest");
+
+        /// <summary>
+        /// Example for implementing testVersion in test.default.config
+        /// default value is -1 if "ExampleTestVersion not found in config
+        /// </summary>
+        /// <value>The example test version.</value>
+        public static int NonexistentTestVersion { get; } = GetTestVersion("NonexistentTest");
 
         /// <summary>
         /// Example for implementing pageVersion in test.devault.config
         /// default value is -1 if "ExamplePageVersion" not found in config
         /// </summary>
         /// <value>The example page version.</value>
-        public static int ExamplePageVersion { get; } = GetPageVersion("ExamplePageVersion");
+        public static int ExamplePageVersion { get; } = GetPageVersion("ExamplePage");
 
-        private static Dictionary<string, Dictionary<string, int>> _versions
-            = new Dictionary<string, Dictionary<string, int>>();
+        private static Dictionary<string, Dictionary<string, int>> _versions = new Dictionary<string, Dictionary<string, int>>();
 
         public static int GetTestVersion(string test)
         {
             if (_versions.IsNullOrEmpty())
+            {
+                if (_versions == null)
+                    _versions = new Dictionary<string, Dictionary<string, int>>();
+
                 PopulateVersions();
+            }
 
             if (_versions.TryGetValue("test", out Dictionary<string, int> testVersions))
             {
@@ -50,7 +61,10 @@ namespace MangoExpressStandard.Util
         public static int GetPageVersion(string page)
         {
             if (_versions.IsNullOrEmpty())
-                PopulateVersions();
+            {
+                if (_versions == null)
+                    _versions = new Dictionary<string, Dictionary<string, int>>();
+            }
 
             if (_versions.TryGetValue("page", out Dictionary<string, int> pageVersions))
             {
@@ -108,7 +122,7 @@ namespace MangoExpressStandard.Util
 
         private static void UpdateVersions(XmlDocument document, string node)
         {
-            var versionNodes = document.DocumentElement?.SelectNodes($"/versions/{node}Version/{node}Version");
+            var versionNodes = document.DocumentElement?.SelectNodes($"/versions/{node}Versions/{node}Version");
             if (versionNodes != null)
             {
                 if (!_versions.ContainsKey(node))
@@ -119,7 +133,7 @@ namespace MangoExpressStandard.Util
                     if (versionNode.Attributes != null)
                     {
                         var testName = versionNode.Attributes[node].Value;
-                        var testVersion = versionNode.Attributes[node].Value;
+                        var testVersion = versionNode.Attributes["version"].Value;
 
                         var isValidVersion = int.TryParse(testVersion, out int testVersionInt);
 

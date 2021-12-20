@@ -21,6 +21,9 @@
     <None Remove="DotNetSeleniumExtras.WaitHelpers" />
     <None Remove="Castle.Core" />
     <None Remove="Castle.Windsor" />
+    <None Remove="NUnit3TestAdapter" />
+    <None Remove="NUnit.ConsoleRunner" />
+    <None Remove="NUnit.Console" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.13" />
@@ -35,5 +38,10 @@
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="Castle.Core" Version="4.4.1" />
     <PackageReference Include="Castle.Windsor" Version="5.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="test.default.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
