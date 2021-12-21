@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
+using MangoExpressStandard.Util;
 using NUnit.Framework;
 
 namespace MangoExpressStandardUnitTests
@@ -27,6 +29,14 @@ namespace MangoExpressStandardUnitTests
             Console.WriteLine($"path:{dir}");
             var text = File.ReadAllText($@"{dir}/MangoExpressStandard.dll.config");
             StringAssert.Contains("<appSettings>", text);
+            Console.WriteLine(text);
+        }
+
+        [Test]
+        public void AppConfigClassTest()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            Console.WriteLine($"path:{config.FilePath}");
         }
     }
 }

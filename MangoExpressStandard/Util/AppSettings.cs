@@ -10,7 +10,7 @@ namespace MangoExpressStandard.Util
         /// <summary>
 		/// Get build version
 		/// </summary>
-		public static string BuildVersion { get; } = GetRequiredAppString("BuildVersion");
+		public static int BuildVersion { get; } = Get<int>("BuildVersion");
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="T:MangoExpressStandard.Util.AppSettings"/> is release.
