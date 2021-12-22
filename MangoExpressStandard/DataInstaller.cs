@@ -34,7 +34,9 @@ namespace MangoExpressStandard
                         var x = c
                         .Named(c.Implementation.Name)
                         .Interceptors(
-                            typeof(TestCaseRetryAttribute));
+                            typeof(TestCaseRetryAttribute),
+                            typeof(TestCaseIdAttribute)
+                            );
                     }));
             }
         }
