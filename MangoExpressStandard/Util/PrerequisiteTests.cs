@@ -14,7 +14,7 @@ namespace MangoExpressStandard.Util
             var logger = LogManager.GetCurrentClassLogger();
             logger.Debug($"Set test status {key}:{status}");
 
-            var file = $@"{PrivateBaseTest.AssemblyPath}\TestStatus.txt";
+            var file = $@"{PrivateBaseTest.AssemblyPath}/TestStatus.txt";
             var lines = File.ReadLines(file).ToList();
 
             int i = 1;
@@ -46,7 +46,7 @@ namespace MangoExpressStandard.Util
         {
             var logger = LogManager.GetCurrentClassLogger();
 
-            var file = $@"{PrivateBaseTest.AssemblyPath}\TestStatus.txt";
+            var file = $@"{PrivateBaseTest.AssemblyPath}/TestStatus.txt";
             var lines = File.ReadLines(file).ToList();
             foreach(var line in lines)
             {

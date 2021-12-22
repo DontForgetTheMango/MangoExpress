@@ -67,6 +67,8 @@ namespace MangoExpressStandard.BaseTest
             {
                 TestLogger.AddStep($"Test Complete:{testName}");
             }
+
+            DocumentTestStatus();
         }
 
         protected void AddEventHandlers(IWebDriver driver)

@@ -15,7 +15,7 @@ namespace MangoExpressStandard.Util
             logger.Debug($"Set test fixture status {key}:{status}");
 
             File.AppendAllText(
-                $@"{PrivateBaseTest.AssemblyPath}\TestFixtureStatus.txt", 
+                $@"{PrivateBaseTest.AssemblyPath}/TestFixtureStatus.txt", 
                 $"{key}:{status}" + Environment.NewLine);
         }
 
@@ -23,7 +23,7 @@ namespace MangoExpressStandard.Util
         {
             var logger = LogManager.GetCurrentClassLogger();
 
-            var file = $@"{PrivateBaseTest.AssemblyPath}\TestFixtureStatus.txt";
+            var file = $@"{PrivateBaseTest.AssemblyPath}/TestFixtureStatus.txt";
             var lines = File.ReadLines(file).ToList();
             foreach (var line in lines)
             {

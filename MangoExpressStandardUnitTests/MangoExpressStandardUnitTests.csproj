@@ -23,4 +23,12 @@
     <None Remove="System.Configuration.ConfigurationManager" />
     <None Remove="Selenium.WebDriver.ChromeDriver" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestFixtureStatus.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestStatus.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
