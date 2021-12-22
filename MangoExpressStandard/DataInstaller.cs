@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -11,21 +12,31 @@ namespace MangoExpressStandard
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            // register attributes
             container.Register(Component.For<TestCaseRetryAttribute>().LifeStyle.Transient);
 
-            container.Register(
-                //Classes.FromThisAssembly()
-                Classes.FromAssembly(Assembly.GetExecutingAssembly())
-                .InNamespace("MangoExpressStandard.POM")
-                .WithService
-                .DefaultInterfaces()
-                .Configure(delegate (ComponentRegistration c)
-                {
-                    var x = c
-                    .Named(c.Implementation.Name)
-                    .Interceptors(
-                        typeof(TestCaseRetryAttribute));
-                }));
+            // register namespaces to which attributes may be applied
+            var namespacesToRegister = new List<string>
+            {
+                "MangoExpressStandard.POM"
+            };
+
+            foreach (var namespaceToRegister in namespacesToRegister)
+            {
+                container.Register(
+                    //Classes.FromThisAssembly()
+                    Classes.FromAssembly(Assembly.GetExecutingAssembly())
+                    .InNamespace(namespaceToRegister)
+                    .WithService
+                    .DefaultInterfaces()
+                    .Configure(delegate (ComponentRegistration c)
+                    {
+                        var x = c
+                        .Named(c.Implementation.Name)
+                        .Interceptors(
+                            typeof(TestCaseRetryAttribute));
+                    }));
+            }
         }
     }
 }
