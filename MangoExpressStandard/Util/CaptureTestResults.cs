@@ -155,13 +155,13 @@ namespace MangoExpressStandard.Util
         private void SetTestResultDirectory()
         {
             if (string.IsNullOrEmpty(TestResultDirectory))
-                TestResultDirectory = $@"{AppSettings.TestResultDirectory}\{_testName}_{_dateString}";
+                TestResultDirectory = $@"{AppSettings.TestResultsDirectory}\{_testName}_{_dateString}";
         }
 
         private void CaptureDataForHTMLResults()
         {
             // create HTML directory
-            var imageDirectory = $@"{AppSettings.TestResultDirectory}\HTML\images";
+            var imageDirectory = $@"{AppSettings.TestResultsDirectory}\HTML\images";
             if (!Directory.Exists(imageDirectory))
             {
                 Directory.CreateDirectory(imageDirectory);
@@ -216,7 +216,7 @@ namespace MangoExpressStandard.Util
                 subfolderName = "PASS";
             }
 
-            var thisSubfolderName = $@"{AppSettings.TestResultDirectory}\{subfolderName}";
+            var thisSubfolderName = $@"{AppSettings.TestResultsDirectory}\{subfolderName}";
             Directory.CreateDirectory(thisSubfolderName);
 
             Screenshot ss = ((ITakesScreenshot)_driver).GetScreenshot();

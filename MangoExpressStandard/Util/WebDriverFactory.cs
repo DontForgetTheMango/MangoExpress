@@ -33,7 +33,7 @@ namespace MangoExpressStandard.Util
 
         private static IWebDriver OpenDesiredWebDriver()
         {
-            var downloadDirectory = AppSettings.DownloadsRootDirectory;
+            var downloadDirectory = AppSettings.DownloadsDirectory;
             switch (AppSettings.Browser)
             {
                 case AppSettings.BrowserOptions.Chrome:

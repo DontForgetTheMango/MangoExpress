@@ -1,0 +1,14 @@
+[
+	{
+		"Execute": false,
+		"UponFailure": 1,
+		"Name": "False Test 1",
+		"Description": "This is a test of the first False Test"
+	},
+	{
+		"Execute": true,
+		"UponFailure": 1,
+		"Name": "True Test 2",
+		"Description": "This is a test of the second True Test"
+	}	
+]

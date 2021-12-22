@@ -31,7 +31,7 @@ namespace MangoExpressStandard.Util
             }
             else
             {
-                return GetTestDetails<T>(scenarioPath, scenarioName);
+                return GetTestDetailsFromFile<T>(scenarioPath, scenarioName);
             }
         }
 

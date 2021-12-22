@@ -38,5 +38,13 @@ namespace MangoExpressStandard.DTO
                 throw new ArgumentException($"BrowserSize does not match <int>x<int> pattern!");
             }
         }
+
+        public override string ToString()
+        {
+            if (!IsFullScreen)
+                return $"{W}x{H}";
+
+            return "Full Screen";
+        }
     }
 }

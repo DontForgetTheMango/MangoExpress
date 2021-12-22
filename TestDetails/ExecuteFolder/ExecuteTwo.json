@@ -1,0 +1,14 @@
+[
+	{
+		"Execute": true,
+		"UponFailure": 1,
+		"Name": "From Folder Test 3",
+		"Description": "This is a test of the third True Test"
+	},
+	{
+		"Execute": true,
+		"UponFailure": 1,
+		"Name": "From Folder Test 4",
+		"Description": "This is a test of the forth True Test"
+	}	
+]

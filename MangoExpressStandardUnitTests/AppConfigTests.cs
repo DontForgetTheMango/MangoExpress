@@ -35,8 +35,10 @@ namespace MangoExpressStandardUnitTests
         [Test]
         public void AppConfigClassTest()
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            Console.WriteLine($"path:{config.FilePath}");
+            var buildVersion = AppSettings.BuildVersion;
+            Console.WriteLine(buildVersion);
+
+            Assert.AreEqual(55, buildVersion);
         }
     }
 }

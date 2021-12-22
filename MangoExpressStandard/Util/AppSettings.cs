@@ -18,41 +18,37 @@ namespace MangoExpressStandard.Util
         /// <value><c>true</c> if release; otherwise, <c>false</c>.</value>
 		public static bool Release { get; } = true;
 
+        #region TestDetails Info
         /// <summary>
-        /// Gets the size of the browser.
-        /// </summary>
-        /// <value>The size of the browser.</value>
-        public static BrowserSize BrowserSize { get; } = new BrowserSize(Get<string>("BrowserSize"));
-
-        /// <summary>
-        /// Gets a value indicating whether this <see cref="T:MangoExpressStandard.Util.AppSettings"/> test details
-        /// execute only.
+        /// Only execute DTO.TestDetails when Execute == true.
         /// </summary>
         /// <value><c>true</c> if test details execute only; otherwise, <c>false</c>.</value>
         public static bool TestDetailsExecuteOnly => Get<bool>("TestDetailsExecuteOnly");
+        #endregion
+        #region Folder Info
         /// <summary>
         /// Gets the test result directory.
         /// </summary>
         /// <value>The test result directory.</value>
-		public static string TestResultDirectory { get; } = GetRequiredAppString("TestResultDirectory");
-
+        public static string TestResultsDirectory { get; } = GetRequiredAppString("TestResultsDirectory");
         /// <summary>
-        /// Gets the test result root directory.
+        /// Gets the test result directory.
         /// </summary>
-        /// <value>The test result root directory.</value>
-        public static string TestResultRootDirectory { get; } = GetRequiredAppString("output");
+        /// <value>The test result directory.</value>
+        public static string TestDetailsDirectory { get; } = GetRequiredAppString("TestDetailsDirectory");
 
         /// <summary>
         /// Gets the downloads root directory.
         /// </summary>
         /// <value>The downloads root directory.</value>
-		public static string DownloadsRootDirectory { get; } = GetRequiredAppString("DownloadsRootDirectory");
-
+		public static string DownloadsDirectory { get; } = GetRequiredAppString("DownloadsDirectory");
+        #endregion
+        #region Browser Info
         /// <summary>
         /// Gets the browser.
         /// </summary>
         /// <value>The browser.</value>
-		public static BrowserOptions Browser
+        public static BrowserOptions Browser
         {
 			get
             {
@@ -79,7 +75,14 @@ namespace MangoExpressStandard.Util
             FireFox
         }
 
+        /// <summary>
+        /// Gets the size of the browser.
+        /// </summary>
+        /// <value>The size of the browser.</value>
+        public static BrowserSize BrowserSize { get; } = new BrowserSize(Get<string>("BrowserSize"));
+
         public static bool HeadlessMode { get; } = Get<bool>("HeadlessMode");
+        #endregion
 
         private static T Get<T>(string key)
         {

@@ -145,13 +145,13 @@ namespace MangoExpressStandard.BaseTest
 
                 logger.Info($"Test Started: {testName}({testArgsString})");
 
-                testResultDirectory = $@"{AppSettings.TestResultRootDirectory}\{className}\{testName}\{testArgsString}";
+                testResultDirectory = $@"{AppSettings.TestResultsDirectory}\{className}\{testName}\{testArgsString}";
             }
             else
             {
                 logger.Info($"Test Started: {testName}");
 
-                testResultDirectory = $@"{AppSettings.TestResultRootDirectory}\{className}\{testName}";
+                testResultDirectory = $@"{AppSettings.TestResultsDirectory}\{className}\{testName}";
             }
 
             return testResultDirectory;
