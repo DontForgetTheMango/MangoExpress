@@ -122,23 +122,23 @@ namespace MangoExpressStandard.Util
 
                     CaptureTestData(string.Empty, NLog.LogLevel.Info);
                 }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
                     switch (_testDetails.UponFailure)
                     {
                         case DTO.TestDetails.TestFailureEnum.Fail:
-                            CaptureTestData(ex.Message, NLog.LogLevel.Error);
+                            //CaptureTestData(ex.Message, NLog.LogLevel.Error);
                             throw;
                         case DTO.TestDetails.TestFailureEnum.Warn:
-                            CaptureTestData(ex.Message, NLog.LogLevel.Warn);
-                            Assert.Warn(ex.ToString());
+                            //CaptureTestData(ex.Message, NLog.LogLevel.Warn);
+                            Assert.Warn("Warning");// ex.ToString());
                             break;
                         case DTO.TestDetails.TestFailureEnum.Ignore:
-                            CaptureTestData(ex.Message, NLog.LogLevel.Debug);
-                            Assert.Ignore(ex.ToString());
+                            //CaptureTestData(ex.Message, NLog.LogLevel.Debug);
+                            Assert.Ignore("Ignore");// ex.ToString());
                             break;
                         default:
-                            CaptureTestData(ex.Message, NLog.LogLevel.Error);
+                            //CaptureTestData(ex.Message, NLog.LogLevel.Error);
                             break;
                     }
                 }
