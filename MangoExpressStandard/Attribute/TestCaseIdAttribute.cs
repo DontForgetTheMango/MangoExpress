@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Castle.DynamicProxy;
 
 namespace MangoExpressStandard.Attribute
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class TestCaseIdAttribute : TestCaseAspect
+    public class TestCaseIdAttribute : IterceptorAspect
     {
+        [DebuggerStepThrough]
         public override void ProcessInvocation(IInvocation invocation)
         {
             var tca = typeof(TestCaseIdAttribute);

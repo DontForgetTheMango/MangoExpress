@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using Castle.DynamicProxy;
 using MangoExpressStandard.Util;
 
 namespace MangoExpressStandard.Attribute
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = true)]
-    public class TestCaseRetryAttribute : TestCaseAspect
+    public class TestCaseRetryAttribute : IterceptorAspect
     {
+        [DebuggerStepThrough]
         public override void ProcessInvocation(IInvocation invocation)
         {
             bool didThrow = false;
@@ -24,6 +26,8 @@ namespace MangoExpressStandard.Attribute
 
             if (didThrow)
                 invocation.Proceed();
+
+            AspectLogger.Debug($"TestCaseRetryAttribute retried {i} times.");
         }
 
         public TestCaseRetryAttribute(int retryCount = 1)

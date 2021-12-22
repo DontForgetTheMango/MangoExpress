@@ -5,8 +5,10 @@ using Castle.DynamicProxy;
 
 namespace MangoExpressStandard.Attribute
 {
-    public abstract class TestCaseAspect : System.Attribute, IInterceptor
+    public abstract class IterceptorAspect : System.Attribute, IInterceptor
     {
+        protected Logger.MangoLogger AspectLogger = Logger.MangoLogger.GetLogger();
+
         [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
