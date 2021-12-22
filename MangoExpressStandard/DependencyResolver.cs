@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Castle.Windsor;
+using Castle.Windsor.Installer;
 
 namespace MangoExpressStandard
 {
     public class DependencyResolver
     {
-        private static IWindsorContainer windsorContainer;
+        private static IWindsorContainer _container;
 
         private static void Initialize()
         {
-            if (windsorContainer == null)
+            if (_container == null)
             {
-                windsorContainer = new WindsorContainer();
-                windsorContainer.Install();
+                _container = new WindsorContainer();
+                _container.Install(FromAssembly.InThisApplication(Assembly.GetExecutingAssembly()));
+                //_container.Install(FromAssembly.This());
             }
         }
 
@@ -27,12 +30,12 @@ namespace MangoExpressStandard
                 throw new Exception();
             }
 
-            if (windsorContainer == null)
+            if (_container == null)
             {
                 Initialize();
             }
 
-            return windsorContainer.Resolve<T>(name);
+            return _container.Resolve<T>(name);
         }
     }
 }

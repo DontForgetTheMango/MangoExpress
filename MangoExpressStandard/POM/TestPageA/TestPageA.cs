@@ -11,7 +11,11 @@ namespace MangoExpressStandard.POM
     /// </summary>
     public class TestPageA : BasePage, ITestPageA
     {
-        public TestPageA(IWebDriver driver) : base(driver)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="driver">driver = null if using DependencyResolver</param>
+        public TestPageA(IWebDriver driver = null) : base(driver)
         {
         }
 

@@ -14,13 +14,15 @@ namespace MangoExpressStandard
             container.Register(Component.For<TestCaseRetryAttribute>().LifeStyle.Transient);
 
             container.Register(
+                //Classes.FromThisAssembly()
                 Classes.FromAssembly(Assembly.GetExecutingAssembly())
                 .InNamespace("MangoExpressStandard.POM")
                 .WithService
                 .DefaultInterfaces()
                 .Configure(delegate (ComponentRegistration c)
                 {
-                    var x = c.Named(c.Implementation.Name)
+                    var x = c
+                    .Named(c.Implementation.Name)
                     .Interceptors(
                         typeof(TestCaseRetryAttribute));
                 }));

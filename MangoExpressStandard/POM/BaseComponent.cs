@@ -30,7 +30,7 @@ namespace MangoExpressStandard.POM
         {
             get
             {
-                return _driver ?? throw new ArgumentNullException("Driver cannot be left null!");
+                return _driver ?? throw new NullReferenceException("Driver cannot be left null!");
             }
             protected set 
             {
