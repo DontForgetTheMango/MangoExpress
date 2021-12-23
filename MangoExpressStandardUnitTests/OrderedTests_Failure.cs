@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace MangoExpressStandardUnitTests
 {
     [TestFixture]
-    public class OrderedTests : OrderedBaseTest
+    public class OrderedTests_Failure : OrderedBaseTest
     {
         public override void SetUp()
         {
@@ -27,14 +27,11 @@ namespace MangoExpressStandardUnitTests
         }
 
         /// <summary>
-        /// Will not run dueto PrerequisiteTests
+        /// Will not run because previous test was ignored
         /// </summary>
         [Test, Order(2), Timeout(TimeoutConst.TenMinutes)]
         public void _02_SecondTest()
         {
-            // if first test did not pass, this test gets ignored.
-            PrerequisiteTests.IgnoreIfNotPassed("MangoExpressStandardUnitTests.OrderedTests._01_FirstTest");
-
             var ctr = new CaptureTestResults(Driver, () =>
             {
                 // test goes here
@@ -43,7 +40,7 @@ namespace MangoExpressStandardUnitTests
         }
 
         /// <summary>
-        /// Will not run because previous test failed
+        /// Will not run because previous test was ignored
         /// </summary>
         [Test, Order(3), Timeout(TimeoutConst.TenMinutes)]
         public void _03_ThirdTest()

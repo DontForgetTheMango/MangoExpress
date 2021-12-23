@@ -54,6 +54,9 @@ namespace MangoExpressStandard.BaseTest
             }
         }
 
+        /// <summary>
+        /// Document Test status
+        /// </summary>
         public virtual void TearDown()
         {
             var testName = $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.MethodName}";
